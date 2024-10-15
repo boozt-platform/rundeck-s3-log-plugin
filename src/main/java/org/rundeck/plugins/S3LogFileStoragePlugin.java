@@ -399,18 +399,8 @@ public class S3LogFileStoragePlugin implements ExecutionFileStoragePlugin, AWSCr
     }
 
     public boolean deleteFile(String filetype) throws IOException, ExecutionFileStorageException {
-        try{
-
-            HashMap<String, Object> expected = new HashMap<>();
-            expected.put(metaKey(META_EXECID), context.get(META_ID_FOR_LOGSTORE));
-            String filePath = resolvedFilepath(expandedPath, filetype);
-
-            amazonS3.deleteObject(getBucket(), filePath);
-            return true;
-        } catch (AmazonClientException e) {
-            logger.log(Level.SEVERE, e.getMessage(), e);
-            throw new ExecutionFileStorageException(e.getMessage(), e);
-        }
+        // return true, but do nothing. We don't want to delete files due to retention policy.
+        return true;
     }
 
 
